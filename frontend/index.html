@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Task Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div>
+        <h1>Smart Task Analyzer</h1>
+        <p>Score and prioritize work in seconds.</p>
+      </div>
+      <div class="strategy-select">
+        <label for="strategy">Strategy</label>
+        <select id="strategy">
+          <option value="smart_balance">Smart Balance</option>
+          <option value="fastest_wins">Fastest Wins</option>
+          <option value="high_impact">High Impact</option>
+          <option value="deadline_driven">Deadline Driven</option>
+        </select>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Add Tasks</h2>
+        <form id="task-form">
+          <div class="form-row">
+            <label for="title">Title</label>
+            <input id="title" name="title" required />
+          </div>
+          <div class="form-row">
+            <label for="due_date">Due Date</label>
+            <input id="due_date" name="due_date" type="date" />
+          </div>
+          <div class="form-row">
+            <label for="estimated_hours">Estimated Hours</label>
+            <input
+              id="estimated_hours"
+              name="estimated_hours"
+              type="number"
+              min="0.1"
+              step="0.1"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="importance">Importance (1-10)</label>
+            <input
+              id="importance"
+              name="importance"
+              type="number"
+              min="1"
+              max="10"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="dependencies">Dependencies (IDs)</label>
+            <input
+              id="dependencies"
+              name="dependencies"
+              placeholder="e.g. 1,2"
+            />
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">Add Task</button>
+            <button id="clear-tasks" class="btn btn-secondary" type="button">
+              Clear Tasks
+            </button>
+          </div>
+        </form>
+
+        <div class="json-loader">
+          <textarea
+            id="json-input"
+            rows="4"
+            placeholder='Paste JSON [{"title": "..."}]'
+          ></textarea>
+          <button id="load-json" class="btn btn-secondary">Load JSON</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="table-header">
+          <h2>Pending Tasks</h2>
+          <button id="analyze-btn" class="btn primary">Analyze Tasks</button>
+        </div>
+        <p class="hint">
+          Tasks are kept in-memory. Build them here, then analyze via the API.
+        </p>
+        <table id="task-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Due</th>
+              <th>Hours</th>
+              <th>Importance</th>
+              <th>Deps</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p id="no-tasks" class="placeholder">No tasks added yet.</p>
+      </section>
+
+      <section class="card">
+        <div class="table-header">
+          <h2>Analysis Result</h2>
+          <span id="analysis-meta"></span>
+        </div>
+        <div id="status"></div>
+        <div id="results" class="results-grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      Built for the Smart Task Analyzer assignment.
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
