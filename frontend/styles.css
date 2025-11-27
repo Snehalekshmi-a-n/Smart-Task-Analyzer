@@ -250,6 +250,18 @@ tbody tr:last-child td {
   color: #86efac;
 }
 
+#cycle-summary {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: #fca5a5;
+}
+
+.result-card.cycle {
+  border-color: rgba(248, 113, 113, 0.9);
+  box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.6),
+    0 16px 40px rgba(248, 113, 113, 0.25);
+}
+
 footer {
   margin-top: 3rem;
   text-align: center;

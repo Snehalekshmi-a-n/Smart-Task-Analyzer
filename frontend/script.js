@@ -12,6 +12,7 @@ const statusEl = document.querySelector('#status');
 const resultsEl = document.querySelector('#results');
 const strategySelect = document.querySelector('#strategy');
 const analysisMeta = document.querySelector('#analysis-meta');
+const cycleSummaryEl = document.querySelector('#cycle-summary');
 
 document.querySelector('#clear-tasks').addEventListener('click', () => {
   state.tasks = [];
@@ -170,11 +171,19 @@ function renderResults(data) {
     data.generated_at
   ).toLocaleString()}`;
 
+  const cyclicTasks = data.tasks.filter((task) => task.cycle_issue);
+  if (cyclicTasks.length) {
+    const titles = cyclicTasks.map((t) => `#${t.id} ${t.title}`).join(', ');
+    cycleSummaryEl.textContent = `⚠ Dependency cycle detected for: ${titles}. Review dependencies for these tasks.`;
+  } else {
+    cycleSummaryEl.textContent = '';
+  }
+
   resultsEl.innerHTML = '';
   data.tasks.forEach((task) => {
     const badgeInfo = getBadge(task.score / 100);
     const card = document.createElement('article');
-    card.className = 'result-card';
+    card.className = `result-card${task.cycle_issue ? ' cycle' : ''}`;
     card.innerHTML = `
       <div class="card-header">
         <h3>${task.title}</h3>
